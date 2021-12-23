@@ -8,3 +8,12 @@ body {
 #contentWrap{
     display:none;
 }
+
+.error{
+    color: #E74A3B ;
+}
+
+.whisper{
+    color:#6a6a6a;
+    font-style: italic;
+}
