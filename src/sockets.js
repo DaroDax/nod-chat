@@ -1,11 +1,16 @@
+const Chat = require('./models/Chat');
+
 module.exports = function ( io ) {
 
     let users = {
 
     };
 
-    io.on('connection', socket => {
+    io.on('connection', async socket => {
         console.log('New User Connected');
+
+        let messages = await Chat.find({});
+        socket.emit('load old msgs', messages);
 
         socket.on('new user', (data, cb) => {
             if(data in users) {
@@ -18,7 +23,7 @@ module.exports = function ( io ) {
             }
         });
 
-        socket.on('send message', (data, cb) => {
+        socket.on('send message', async(data, cb) => {
 
             var msg = data.trim();
             if(msg.substr(0,3) === '/w '){
@@ -39,6 +44,13 @@ module.exports = function ( io ) {
                     cb('Error! please enter a valid message');
                 }
             }else{
+
+            var newMsg = new Chat({
+                msg, 
+                nick: socket.nickname
+            });
+
+            await newMsg.save();
 
             io.sockets.emit('new message', {
                 msg: data,

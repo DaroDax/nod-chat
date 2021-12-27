@@ -5,8 +5,15 @@ const express = require('express'); //Express
 const app = express(); //Guarda las funciones express
 const server = http.createServer(app);
 
+const mongoose = require('mongoose'); //MongoDB
+
 const socketio = require('socket.io'); //Conexion tiempo real
 const io = socketio(server); //Actualizado
+
+//db connection 
+mongoose.connect('mongodb://localhost/chat-database')
+.then(db => console.log('DataBase connection sucessfully'))
+.catch(err => console.log(err));
 
 // Settings
 app.set('port', process.env.PORT || 3000);

@@ -17,3 +17,8 @@ body {
     color:#6a6a6a;
     font-style: italic;
 }
+
+#chat{
+    overflow-y:scroll;
+    height:20em;
+}
